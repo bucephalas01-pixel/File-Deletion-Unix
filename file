@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Directory path (you can change this or pass as an argument)
+DIR="/path/to/your/folder"
+
+# Check if directory exists
+if [ -d "$DIR" ]; then
+  echo "Deleting all .md files in $DIR ..."
+  find "$DIR" -type f -name "*.md" -exec rm -f {} \;
+  echo "All .md files deleted."
+else
+  echo "Directory not found: $DIR"
+fi
