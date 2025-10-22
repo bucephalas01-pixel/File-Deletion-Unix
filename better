@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Ask user for folder path (default = current directory)
+read -rp "Enter the folder path (leave empty for current): " DIR
+DIR=${DIR:-.}
+
+# Verify directory exists
+if [ ! -d "$DIR" ]; then
+  echo "❌ Directory not found: $DIR"
+  exit 1
+fi
+
+# Check if there are any .md files
+MD_FILES=("$DIR"/*.md)
+if [ ! -e "${MD_FILES[0]}" ]; then
+  echo "No .md files found in $DIR"
+  exit 0
+fi
+
+# List found files
+echo "Found the following .md files in $DIR:"
+ls "$DIR"/*.md
+echo
+
+# Ask for confirmation
+read -rp "Are you sure you want to delete these files? (y/n): " CONFIRM
+if [[ "$CONFIRM" =~ ^[Yy]$ ]]; then
+  rm -f "$DIR"/*.md
+  echo "✅ All .md files deleted from $DIR"
+else
+  echo "❎ Deletion cancelled."
+fi
